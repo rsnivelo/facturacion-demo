@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+				<h3 class="card-title">
+				<a class="btn btn-info"
+								th:href="@{/factura/form/} + ${cliente.id}" th:text="'Crear factura'"></a>
+				</h3>
+				<ul class="list-group">
+					<li class="list-group-item" th:text="${cliente.nombres}"></li>
+					<li class="list-group-item" th:text="${cliente.apellidos}"></li>
+					<li class="list-group-item" th:text="${cliente.email}"></li>
+					<li class="list-group-item" th:text="${cliente.fechaCreacion}"></li>
+				</ul>
+				
+				<div th:if="${#lists.isEmpty(cliente.facturasList)}" class="alert alert-info my-4" th:text="'El cliente no tiene facturas.'"></div>
+				<table th:if="${not #lists.isEmpty(cliente.facturasList)}" class="table table-striped table-bordered my-4">
+					<thead>
+						<tr>
+							<th>Descripción</th>
+							<th>Fecha</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="factura: ${cliente.facturasList}">
+							<td th:text="${factura.descripcion}"></td>
+							<td th:text="${factura.fechaCreacion}"></td>
+							<td th:text="${factura.total}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

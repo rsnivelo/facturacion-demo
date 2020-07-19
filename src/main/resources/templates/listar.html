@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+</head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+				<div class="card-title">
+					<a th:href="@{/clientes/form}" class="btn btn-success mb-2">Crear
+						cliente</a>
+				</div>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Apellidos</th>
+							<th>Nombres</th>
+							<th>Email</th>
+							<th>Fecha de creación</th>
+							<th>Editar</th>
+							<th>Ver</th>
+							<th>Crear factura</th>
+							<th>Eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cliente: ${clientes}">
+							<td th:text="${cliente.id}"></td>
+							<td th:text="${cliente.apellidos}"></td>
+							<td th:text="${cliente.nombres}"></td>
+							<td th:text="${cliente.email}"></td>
+							<td th:text="${cliente.fechaCreacion}"></td>
+							<td><a class="btn btn-primary"
+								th:href="@{/clientes/form/} + ${cliente.id}" th:text="Editar"></a></td>
+							<td><a class="btn btn-info"
+								th:href="@{/clientes/ver/} + ${cliente.id}" th:text="Ver"></a></td>
+							<td><a class="btn btn-info"
+								th:href="@{/factura/form/} + ${cliente.id}" th:text="'Crear factura'"></a></td>
+							<td><a class="btn btn-danger"
+								th:href="@{/clientes/eliminar/} + ${cliente.id}"
+								th:text="Eliminar"
+								onclick="return confirm('Est� seguro de eliminar?');"></a></td>
+						</tr>
+					</tbody>
+				</table>
+				<nav th:replace="paginator-nav :: paginator"></nav>
+			</div>
+
+		</div>
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
